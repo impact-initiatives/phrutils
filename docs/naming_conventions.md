@@ -1,8 +1,6 @@
-# Naming Conventions (Moved)
+# Naming Conventions
 
-Naming conventions are now maintained in:
+Canonical naming guidance is maintained in
+[`coding_conventions.md`](coding_conventions.md), section **"Naming conventions (summary)"**.
 
-- [`coding_conventions.md`](coding_conventions.md), section **“Naming Conventions (Consolidated)”**
-
-This file is kept as a pointer for backward compatibility with older links.
-
+This file is kept as a stable pointer for legacy links.
