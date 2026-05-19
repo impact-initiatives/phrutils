@@ -1,7 +1,7 @@
-# phr_utils Documentation
+# phrutils Documentation
 
-This `docs/` folder contains package-level guidance for the **phr_utils**
-repository and the current utility-only scope of the **phr** package.
+This `docs/` folder contains package-level guidance for the **phrutils**
+package and its current utility-only scope.
 
 For package overview and installation, see the root
 [`README.md`](../README.md).
