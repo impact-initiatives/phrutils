@@ -1,4 +1,4 @@
-Package: phr
+Package: phr_utils
 Title: Core Public Health Utility Functions
 Version: 0.1.0
 Authors@R:
