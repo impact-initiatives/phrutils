@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(phr_utils)
+library(phrutils)
 
-test_check("phr_utils")
+test_check("phrutils")

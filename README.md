@@ -20,7 +20,7 @@ remotes::install_github("SaeedR1987/phr_utils")
 Then load the package:
 
 ```r
-library(phr_utils)
+library(phrutils)
 ```
 
 ### System requirements
@@ -31,7 +31,7 @@ library(phr_utils)
 ## Quick start
 
 ```r
-library(phr_utils)
+library(phrutils)
 
 # Validation
 phr_validate_columns(df, c("id", "value"), soft = FALSE)
