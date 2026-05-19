@@ -1,7 +1,7 @@
-# phr — Core Public Health Utilities
+# phr_utils — Core Public Health Utilities
 
-**phr** is an R package focused on shared utility layers used across public
-health workflows:
+**phr_utils** is the repository for the **phr** R package, focused on shared
+utility layers used across public health workflows:
 
 - `utils_errors` — standardized error, warning, message, and safe-try wrappers
 - `utils_validators` — type, schema, and value validation helpers
@@ -10,11 +10,12 @@ health workflows:
 
 ## Installation
 
-The package is not yet on CRAN. Install the development version directly from GitHub using the [remotes](https://remotes.r-lib.org/) package:
+The package is not yet on CRAN. Install the development version directly from
+GitHub using the [remotes](https://remotes.r-lib.org/) package:
 
 ```r
 # install.packages("remotes")
-remotes::install_github("impact-initiatives/public_health_resources")
+remotes::install_github("SaeedR1987/phr_utils")
 ```
 
 Then load the package:
