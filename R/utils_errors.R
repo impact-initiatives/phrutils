@@ -22,7 +22,7 @@
       type,
       message = base::message(message),
       warning = base::warning(message, call. = FALSE),
-      error   = base::message(paste0("[IPHRA::Error] ", message))
+      error   = base::message(paste0("[PHR::Error] ", message))
     )
   }
 }
@@ -33,7 +33,7 @@
     fn <- get("showNotification", asNamespace("shiny"))
     fn(message, type = type)
   } else {
-    message(sprintf("[IPHRA::Notify Fallback] %s (%s)", message, type))
+    message(sprintf("[PHR::Notify Fallback] %s (%s)", message, type))
   }
 }
 
@@ -56,7 +56,7 @@
 #' @export
 phr_error <- function(message, type = "Error", origin = NULL, hint = NULL) {
   full_msg <- paste0(
-    "[IPHRA::", type, "] ",
+    "[PHR::", type, "] ",
     if (!is.null(origin)) paste0("In `", origin, "`: ") else "",
     message,
     if (!is.null(hint)) paste0("\n \u2022 Hint: ", hint) else ""
@@ -92,7 +92,7 @@ phr_error <- function(message, type = "Error", origin = NULL, hint = NULL) {
 #' @export
 phr_warning <- function(message, type = "Warning", origin = NULL, hint = NULL) {
   full_msg <- paste0(
-    "[IPHRA::", type, "] ",
+    "[PHR::", type, "] ",
     if (!is.null(origin)) paste0("In `", origin, "`: ") else "",
     message,
     if (!is.null(hint)) paste0("\n \u2022 Hint: ", hint) else ""
@@ -114,7 +114,7 @@ phr_warning <- function(message, type = "Warning", origin = NULL, hint = NULL) {
 #' @export
 phr_message <- function(message, origin = NULL) {
   full_msg <- paste0(
-    "[IPHRA::Message] ",
+    "[PHR::Message] ",
     if (!is.null(origin)) paste0("In `", origin, "`: ") else "",
     message
   )
@@ -211,12 +211,12 @@ phr_try <- function(expr,
 
       # Check if error came from a nested phr_try with step info
       # If so, preserve the nested context chain
-      if (grepl("\\[IPHRA::", base_msg)) {
+      if (grepl("\\[PHR::", base_msg)) {
         # Already has IPHRA structure - check if we need to add outer context
         if (!is.null(origin) && !grepl(origin, base_msg, fixed = TRUE)) {
           # Add outer origin context to nested error
-          msg <- sub("\\[IPHRA::TryError\\] ",
-                     paste0("[IPHRA::TryError] ", origin, " \u2192 "),
+          msg <- sub("\\[PHR::TryError\\] ",
+                     paste0("[PHR::TryError] ", origin, " \u2192 "),
                      base_msg)
         } else {
           msg <- base_msg
@@ -224,9 +224,9 @@ phr_try <- function(expr,
       } else {
         # New error - format with full origin (including step if present)
         if (!is.null(full_origin)) {
-          msg <- paste0("[IPHRA::TryError] ", full_origin, ": ", base_msg)
+          msg <- paste0("[PHR::TryError] ", full_origin, ": ", base_msg)
         } else {
-          msg <- paste0("[IPHRA::TryError] ", base_msg)
+          msg <- paste0("[PHR::TryError] ", base_msg)
         }
       }
 

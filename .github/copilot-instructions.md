@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for public_health_resources Repository
+# GitHub Copilot Instructions for phr_utils Repository
 
 ## General Guidelines
 
