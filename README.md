@@ -1,7 +1,7 @@
-# phr_utils — Core Public Health Utilities
+# phrutils — Core Public Health Utilities
 
-**phr_utils** is the repository for the **phr_utils** R package, focused on shared
-utility layers used across public health workflows:
+**phrutils** is an R package focused on shared utility layers used across public
+health workflows:
 
 - `utils_errors` — standardized error, warning, message, and safe-try wrappers
 - `utils_validators` — type, schema, and value validation helpers
