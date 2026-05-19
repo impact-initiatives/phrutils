@@ -59,14 +59,14 @@ ensure_value <- function(value, default) {
     phr_assert(
       is.vector(variable) && (is.character(variable) || is.factor(variable)),
       origin = origin,
-      hint = phr_txt("`variable` must be a character or factor vector.")
+      hint = glue::glue("`variable` must be a character or factor vector.")
     )
 
     # Validate `allowable_values`
     phr_assert(
       is.vector(allowable_values) && is.character(allowable_values),
       origin = origin,
-      hint = phr_txt("`allowable_values` must be a character vector.")
+      hint = glue::glue("`allowable_values` must be a character vector.")
     )
 
     # Convert `variable` to character if it's a factor
@@ -79,7 +79,7 @@ ensure_value <- function(value, default) {
     phr_assert(
       length(allowable_values) > 0,
       origin = origin,
-      hint = phr_txt("`allowable_values` must contain at least one valid value.")
+      hint = glue::glue("`allowable_values` must contain at least one valid value.")
     )
 
     # Helper function to check if all values in a cell are valid
@@ -94,7 +94,7 @@ ensure_value <- function(value, default) {
 
     return(result)
 
-  }, on_error = "abort", origin = origin, hint = phr_txt("Ensure `variable` contains valid select multiple responses, and `allowable_values` defines the allowed options."))
+  }, on_error = "abort", origin = origin, hint = glue::glue("Ensure `variable` contains valid select multiple responses, and `allowable_values` defines the allowed options."))
 }
 
 #' @title Check if a Select Multiple Input has More Than One Selection
@@ -138,7 +138,7 @@ ensure_value <- function(value, default) {
         select_multiple_input,
         select_multiple_col,
         origin = origin,
-        hint = phr_txt("Ensure the column for testing multiple selections exists in the dataset."),
+        hint = "Ensure the column for testing multiple selections exists in the dataset.",
         soft = FALSE
       )
 
@@ -149,7 +149,7 @@ ensure_value <- function(value, default) {
     phr_assert(
       is.character(select_multiple_input) || is.factor(select_multiple_input),
       origin = origin,
-      phr_txt("The input must be a character or factor vector.")
+      "The input must be a character or factor vector."
     )
 
     # Check condition: more than one selection
@@ -161,7 +161,7 @@ ensure_value <- function(value, default) {
     )
 
     return(result)
-  }, on_error = "abort", origin = origin, hint = phr_txt("Ensure the input contains valid select multiple responses delimited by spaces."))
+  }, on_error = "abort", origin = origin, hint = "Ensure the input contains valid select multiple responses delimited by spaces.")
 }
 
 #' @title Check if a Select Multiple Input has More Than Three Selections
@@ -205,7 +205,7 @@ ensure_value <- function(value, default) {
         select_multiple_input,
         select_multiple_col,
         origin = origin,
-        hint = phr_txt("Ensure the column for testing multiple selections exists in the dataset."),
+        hint = "Ensure the column for testing multiple selections exists in the dataset.",
         soft = FALSE
       )
 
@@ -216,7 +216,7 @@ ensure_value <- function(value, default) {
     phr_assert(
       is.character(select_multiple_input) || is.factor(select_multiple_input),
       origin = origin,
-      phr_txt("The input must be a character or factor vector.")
+      "The input must be a character or factor vector."
     )
 
     # Check condition: more than three selections
@@ -228,7 +228,7 @@ ensure_value <- function(value, default) {
     )
 
     return(result)
-  }, on_error = "abort", origin = origin, hint = phr_txt("Ensure the input contains valid select multiple responses delimited by spaces."))
+  }, on_error = "abort", origin = origin, hint = "Ensure the input contains valid select multiple responses delimited by spaces.")
 }
 
 
@@ -677,9 +677,7 @@ phr_get_data_from_design <- function(survey_design, origin = NULL) {
 
   if (!inherits(survey_design, valid_classes)) {
     phr_error(
-      message = phr_txt(
-        "survey_design must be a survey design object (e.g. created with srvyr::as_survey_design())."
-      ),
+      message = "survey_design must be a survey design object (e.g. created with srvyr::as_survey_design()).",
       origin = origin,
       hint = "Use srvyr::as_survey_design() to create a survey design from your data frame."
     )
@@ -689,7 +687,7 @@ phr_get_data_from_design <- function(survey_design, origin = NULL) {
 
   if (!is.data.frame(df)) {
     phr_error(
-      message = phr_txt("Could not extract a valid data frame from the survey design object."),
+      message = "Could not extract a valid data frame from the survey design object.",
       origin = origin
     )
   }
@@ -924,8 +922,8 @@ phr_validate_all_numeric <- function(x,
   if (.is_safely_coercible(x, "numeric")) return(invisible(TRUE))
 
   # ---- Build translated message + hint ----
-  msg_txt  <- phr_txt("Expected all values to be numeric or safely coercible to numeric.")
-  hint_txt <- hint %||% phr_txt("Ensure values contain only digits and valid numeric strings.")
+  msg_txt  <- "Expected all values to be numeric or safely coercible to numeric."
+  hint_txt <- hint %||% "Ensure values contain only digits and valid numeric strings."
 
   # ---- SOFT MODE: warning only ----
   if (soft) {
@@ -1298,9 +1296,9 @@ phr_validate_range <- function(df,
       # NEW: Soft mode (warning only)
       # -----------------------------------------
       phr_warning(
-        message = phr_txt(msg),
+        message = msg,
         origin = origin,
-        hint = hint %||% phr_txt("Check data entry or range filters.")
+        hint = hint %||% "Check data entry or range filters."
       )
       return(invisible(FALSE))  # return FALSE for caller logic
     }
@@ -1311,7 +1309,7 @@ phr_validate_range <- function(df,
     phr_error(
       message = msg,
       origin = origin,
-      hint = hint %||% phr_txt("Check data entry or range filters.")
+      hint = hint %||% "Check data entry or range filters."
     )
   }
 
@@ -1461,7 +1459,7 @@ phr_validate_no_duplicates <- function(df, origin = NULL, hint = NULL, soft) {
 #' @export
 phr_validate_no_constant_columns <- function(df, origin = NULL, hint = NULL, soft) {
   phr_validate_dataframe(df, origin, soft)
-  const_cols <- names(df)[sapply(df, function(x) length(unique(na.omit(x))) <= 1)]
+  const_cols <- names(df)[sapply(df, function(x) length(unique(stats::na.omit(x))) <= 1)]
   if (length(const_cols) > 0) {
     msg <- paste0("Constant (uninformative) columns detected: ", paste(const_cols, collapse = ", "))
     hint_txt <- hint %||% "Consider removing or reviewing these columns."
@@ -1558,7 +1556,7 @@ phr_validate_schema <- function(df, schema, origin = NULL, hint = NULL, soft) {
     }
     spec <- schema[[col]]
     if (!is.null(spec$type)) {
-      phr_validate_column_types(df[, col, drop = FALSE], setNames(list(spec$type), col), origin = origin, soft = soft)
+      phr_validate_column_types(df[, col, drop = FALSE], stats::setNames(list(spec$type), col), origin = origin, soft = soft)
     }
     if (!is.null(spec$allowed_values)) {
       phr_validate_all_character(df[[col]], allowed_values = spec$allowed_values, origin = origin, soft = soft)
@@ -1681,7 +1679,7 @@ phr_infer_column_type <- function(x, name = NULL, return_details = FALSE) {
 phr_validate_date_order_vectors <- function(start, end, origin = NULL, soft) {
   # --- Defensive checks ---
   if (length(start) != length(end)) {
-    msg <- phr_txt(glue::glue("Start and end date vectors differ in length. Comparing first {min(length(start), length(end))} pairs."))
+    msg <- glue::glue("Start and end date vectors differ in length. Comparing first {min(length(start), length(end))} pairs.")
     if (soft) {
       phr_warning(message = msg, origin = origin)
     } else {
@@ -1701,7 +1699,7 @@ phr_validate_date_order_vectors <- function(start, end, origin = NULL, soft) {
   # Identify invalid coercions
   invalid_pairs <- which(is.na(start_date) | is.na(end_date))
   if (length(invalid_pairs) > 0) {
-    msg <- phr_txt(glue::glue("Found {length(invalid_pairs)} records with invalid or missing start/end dates."))
+    msg <- glue::glue("Found {length(invalid_pairs)} records with invalid or missing start/end dates.")
     if (soft) {
       phr_warning(message = msg, origin = origin)
     } else {
@@ -1712,7 +1710,7 @@ phr_validate_date_order_vectors <- function(start, end, origin = NULL, soft) {
   # Identify reversed (chronologically invalid) pairs
   reversed <- which(start_date > end_date)
   if (length(reversed) > 0) {
-    msg <- phr_txt(glue::glue("Found {length(reversed)} records where recall_start occurs after recall_end."))
+    msg <- glue::glue("Found {length(reversed)} records where recall_start occurs after recall_end.")
     if (soft) {
       phr_warning(message = msg, origin = origin)
       return(invisible(FALSE))
@@ -1721,7 +1719,7 @@ phr_validate_date_order_vectors <- function(start, end, origin = NULL, soft) {
     }
   }
 
-  phr_message(phr_txt(glue::glue("Date order validation passed for {length(start_date)} records.")))
+  phr_message(glue::glue("Date order validation passed for {length(start_date)} records."))
   return(invisible(TRUE))
 }
 
@@ -1895,9 +1893,7 @@ phr_parse_hhmm <- function(x, origin = NULL) {
 
   if (!grepl("^[0-9]{1,2}:[0-9]{2}$", x_chr)) {
     phr_error(
-      message = phr_txt(
-        "Cannot parse time-of-day value: '{x_chr}'. Expected 'HH:MM' format (e.g. '08:30', '18:00')."
-      ),
+      message = glue::glue("Cannot parse time-of-day value: '{x_chr}'. Expected 'HH:MM' format (e.g. '08:30', '18:00')."),
       origin = origin %||% "phr_parse_hhmm",
       hint   = "Provide a 24-hour time string such as '08:00' or '18:30'."
     )
@@ -1909,9 +1905,7 @@ phr_parse_hhmm <- function(x, origin = NULL) {
 
   if (h < 0L || h > 23L || m < 0L || m > 59L) {
     phr_error(
-      message = phr_txt(
-        "Invalid time-of-day value: '{x_chr}'. Hours must be 0-23 and minutes 0-59."
-      ),
+      message = glue::glue("Invalid time-of-day value: '{x_chr}'. Hours must be 0-23 and minutes 0-59."),
       origin = origin %||% "phr_parse_hhmm"
     )
   }
