@@ -1,6 +1,6 @@
 # phr_utils — Core Public Health Utilities
 
-**phr_utils** is the repository for the **phr** R package, focused on shared
+**phr_utils** is the repository for the **phr_utils** R package, focused on shared
 utility layers used across public health workflows:
 
 - `utils_errors` — standardized error, warning, message, and safe-try wrappers
@@ -21,7 +21,7 @@ remotes::install_github("SaeedR1987/phr_utils")
 Then load the package:
 
 ```r
-library(phr)
+library(phr_utils)
 ```
 
 ### System requirements
@@ -32,7 +32,7 @@ library(phr)
 ## Quick start
 
 ```r
-library(phr)
+library(phr_utils)
 
 # Validation
 phr_validate_columns(df, c("id", "value"), soft = FALSE)
