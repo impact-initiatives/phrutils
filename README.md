@@ -5,7 +5,6 @@ utility layers used across public health workflows:
 
 - `utils_errors` — standardized error, warning, message, and safe-try wrappers
 - `utils_validators` — type, schema, and value validation helpers
-- `utils_language` — lightweight translation/text lookup helper
 - `utils_color_palettes` — reusable visualization color palettes
 
 ## Installation
