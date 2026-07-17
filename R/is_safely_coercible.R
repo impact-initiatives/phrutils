@@ -1,5 +1,30 @@
-# ---- Utility: Internal coercion check --------------------------------
-
+#' Check whether a vector can be safely coerced to a target type
+#'
+#' `is_safely_coercible()` returns a single logical value indicating whether
+#' all elements of a vector can be safely coerced to a specified type. It is a
+#' higher-level wrapper around `which_bad_coercible()` and is intended for
+#' validating input before performing type conversion.
+#'
+#' @param x A vector of values to test.
+#' @param to_type A character string specifying the target type. Supported
+#'   values include `"numeric"`, `"character"`, `"logical"`, `"Date"`,
+#'   `"datetime"`, `"POSIXct"`, `"POSIXlt"`, and `"factor"`.
+#'
+#' @details
+#' The function checks coercibility using base R conversion functions and a
+#' wide set of date/time formats. `NA` values are treated as safely coercible.
+#' For logical coercion, only standard logical tokens (`TRUE`, `FALSE`, `T`,
+#' `F`, `1`, `0`) are accepted. For datetime coercion, the function uses the
+#' internal `.phr_datetime_formats` list of formats.
+#'
+#' @return A single logical value: `TRUE` if all elements of `x` can be safely
+#'   coerced to the requested type, otherwise `FALSE`.
+#'
+#' @examples
+#' is_safely_coercible(c("1", "2", "3"), "numeric")
+#' is_safely_coercible(c("TRUE", "FALSE", "maybe"), "logical")
+#' is_safely_coercible(c("2020-01-01", "not a date"), "Date")
+#'
 #' @export
 is_safely_coercible <- function(x, to_type) {
   # returns TRUE if all elements of x can be safely coerced to the target type
