@@ -20,5 +20,3 @@ phr_validate_factor <- function(x, origin = NULL, hint = NULL, soft) {
   }
   invisible(TRUE)
 }
-
-# ---- Validate Columns (new) -----------------------------------------

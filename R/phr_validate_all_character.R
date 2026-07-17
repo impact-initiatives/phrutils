@@ -48,6 +48,3 @@ phr_validate_all_character <- function(x, allowed_values = NULL, origin = NULL, 
 
   invisible(TRUE)
 }
-
-
-# ---- All Logical ----------------------------------------------------

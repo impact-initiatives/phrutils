@@ -47,5 +47,3 @@ which_bad_coercible <- function(x, to_type) {
     rep(TRUE, n)
   })
 }
-
-# ---- All Numeric ----------------------------------------------------

@@ -27,6 +27,3 @@ phr_validate_list <- function(x, origin = NULL, hint = NULL, soft) {
 
   invisible(TRUE)
 }
-
-
-# ---- Validate Vector Length -----------------------------------------

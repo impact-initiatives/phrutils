@@ -8,6 +8,3 @@ phr_showNotification <- function(message, type = "default") {
     message(sprintf("[PHR::Notify Fallback] %s (%s)", message, type))
   }
 }
-
-
-# ---- Core functions ------------------------------------------------

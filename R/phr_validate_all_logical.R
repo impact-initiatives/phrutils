@@ -20,6 +20,3 @@ phr_validate_all_logical <- function(x, origin = NULL, hint = NULL, soft) {
   }
   phr_error(msg, origin = origin, hint = hint_txt)
 }
-
-
-# ---- All Date -------------------------------------------------------

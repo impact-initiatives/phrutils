@@ -59,5 +59,3 @@ phr_validate_date <- function(x, origin = NULL, hint = NULL, soft) {
   "%m/%d/%Y %I:%M:%S %p", "%d/%m/%Y %H:%M:%S", "%d-%m-%Y %H:%M:%S",
   "%Y-%m-%d %H:%M", "%Y/%m/%d %H:%M", "%d/%m/%Y %H:%M"
 )
-
-# ---- Validate Datetime ----------------------------------------------
