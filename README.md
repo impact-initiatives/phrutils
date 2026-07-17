@@ -14,7 +14,7 @@ GitHub using the [remotes](https://remotes.r-lib.org/) package:
 
 ```r
 # install.packages("remotes")
-remotes::install_github("SaeedR1987/phrutils")
+remotes::install_github("impact-initiatives/phrutils")
 ```
 
 Then load the package:
