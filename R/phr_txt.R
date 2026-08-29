@@ -9,7 +9,7 @@
 #' @param default Optional default value if key is not found.
 #' @param session Shiny session object for reactive language selection.
 #' @return The translated text string.
-#' @noRd
+#' @export
 phr_txt <- function(key, lang = NULL, default = NULL, session = shiny::getDefaultReactiveDomain()) {
   # [FUTURE] When language reactivity is connected, use session$userData$lang()
   # If no reactive session available, fallback to phr_current_lang or "en"
