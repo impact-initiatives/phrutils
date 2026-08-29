@@ -1,5 +1,5 @@
 #' Load translation dictionaries from JSON files in inst/app/www/i18n/
-#' @noRd
+#' @export
 phr_load_translations <- function() {
 
   translations <- list()

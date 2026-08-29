@@ -2,7 +2,7 @@
 #'
 #' @param text The text string to convert
 #' @return A lowercase key with underscores instead of spaces
-#' @noRd
+#' @export
 phr_text_to_key <- function(text) {
   if (is.null(text) || text == "") return("")
 
