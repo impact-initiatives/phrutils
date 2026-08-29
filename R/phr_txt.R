@@ -10,44 +10,34 @@
 #' @param session Shiny session object for reactive language selection.
 #' @return The translated text string.
 #' @export
-phr_txt <- function(key, lang = NULL, default = NULL, session = shiny::getDefaultReactiveDomain()) {
-  # [FUTURE] When language reactivity is connected, use session$userData$lang()
-  # If no reactive session available, fallback to phr_current_lang or "en"
+phr_txt <- function(
+    key,
+    lang = NULL,
+    default = NULL,
+    session = shiny::getDefaultReactiveDomain()
+) {
+
+  translations <- get_phr_translations()
 
   if (is.null(lang)) {
-    if (!is.null(session) && !is.null(session$userData$lang)) {
-      # Safe reactive access - only works once session$userData$lang is defined
-      lang <- tryCatch(session$userData$lang(), error = function(e) NULL)
-    }
+    lang <- get_phr_language(session)
   }
 
-  # Fallback chain
-  if (is.null(lang) || !lang %in% names(phr_translations)) {
-    if (exists("phr_current_lang", envir = .GlobalEnv)) {
-      lang <- get("phr_current_lang", envir = .GlobalEnv)
-    } else {
-      lang <- "en"
-    }
+  if (is.null(lang) || !lang %in% names(translations)) {
+    lang <- .phr_env$current_lang
   }
 
-  # Convert text to key format if it's a full text string
   lookup_key <- phr_text_to_key(key)
 
-  # ---- Lookup ----
-  value <- phr_translations[[lang]][[lookup_key]]
+  value <- translations[[lang]][[lookup_key]]
 
-  # If not found in target language and not English, try English as fallback
   if (is.null(value) && lang != "en") {
-    value <- phr_translations[["en"]][[lookup_key]]
+    value <- translations[["en"]][[lookup_key]]
   }
-
-  # ---- Fallback logic ----
 
   if (is.null(value) || value == "") {
-    if (!is.null(default)) return(default)
-    # Return the original key as-is (useful during development)
-    return(key)
+    return(default %||% key)
   }
 
-  return(value)
+  value
 }
