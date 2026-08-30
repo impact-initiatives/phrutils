@@ -6,4 +6,3 @@ get_phr_translations <- function() {
 
   .phr_env$translations
 }
-``
