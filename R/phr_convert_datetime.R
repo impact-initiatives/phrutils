@@ -20,7 +20,19 @@ phr_convert_datetime <- function(x, tz = "UTC") {
   if (inherits(x, "Date")) return(as.POSIXct(as.character(x), format = "%Y-%m-%d", tz = tz))
 
   # Numeric \u2014 treat as Unix timestamp
-  if (is.numeric(x)) return(as.POSIXct(x, origin = "1970-01-01", tz = tz))
+  # Numeric
+  if (is.numeric(x)) {
+
+    # Heuristic: Excel serial dates are typically in the tens of thousands,
+    # whereas Unix timestamps are in the billions.
+    if (all(is.na(x) | (x > 20000 & x < 100000))) {
+      return(as.POSIXct((x - 25569) * 86400,
+                        origin = "1970-01-01",
+                        tz = tz))
+    }
+
+    return(as.POSIXct(x, origin = "1970-01-01", tz = tz))
+  }
 
   # Character \u2014 try known datetime formats
   x_chr <- as.character(x)
