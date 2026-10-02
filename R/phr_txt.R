@@ -36,7 +36,7 @@ phr_txt <- function(
   }
 
   if (is.null(value) || value == "") {
-    return(default %||% key)
+    value <- default %||% paste0("\u29eb", key, "\u29eb")
   }
 
   value <- as.character(
